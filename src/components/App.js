@@ -1,6 +1,15 @@
+// Import CodeMirror base styles
+import 'codemirror/lib/codemirror.css';
+// Import the theme (if you're using one)
+import 'codemirror/theme/material.css';
+
+
+import 'codemirror/lib/codemirror.css';
 import React, { useState, useEffect } from 'react';
 import Editor from './Editor'
 import useLocalStorage from '../hooks/useLocalStorage'
+
+
 
 function App() {
   const [html, setHtml] = useLocalStorage('html', '')
@@ -9,6 +18,7 @@ function App() {
   const [srcDoc, setSrcDoc] = useState('')
 
   useEffect(() => {
+    console.log("HTML, CSS, JS values:", html, css, js); // Log the values
     const timeout = setTimeout(() => {
       setSrcDoc(`
         <html>
@@ -18,9 +28,10 @@ function App() {
         </html>
       `)
     }, 250)
-
+  
     return () => clearTimeout(timeout)
   }, [html, css, js])
+  
 
   return (
     <>
@@ -48,7 +59,7 @@ function App() {
         <iframe
           srcDoc={srcDoc}
           title="output"
-          sandbox="allow-scripts"
+          sandbox="allow-scripts allow-same-origin"
           frameBorder="0"
           width="100%"
           height="100%"
